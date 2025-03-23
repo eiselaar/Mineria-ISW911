@@ -1,0 +1,367 @@
+---
+title: "LAB03 - Análisis de Dataset de Enfermedades Cardíacas"
+author: "Emily - Karen"
+date: "2025-03-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+# Configurar repositorio CRAN
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Instalar paquetes necesarios solo si no están instalados
+if (!requireNamespace("pacman", quietly = TRUE)) {
+  install.packages("pacman")
+}
+
+# Cargar todos los paquetes necesarios con pacman
+pacman::p_load(tidyverse, ggplot2, corrplot, knitr, naniar)
+
+# Imprimir directorio de trabajo para referencia
+print(getwd())
+```
+
+## 1. Carga y exploración inicial de datos
+
+```{r cargar_datos}
+# Cargar el dataset de enfermedades cardíacas
+# Ajusta la ruta según la ubicación del archivo en tu sistema
+
+datos <- read.csv("C:/Users/isela/Desktop/Mineria/RLab03Mineria/Files/heart.csv")
+# Mostrar las primeras filas para verificar carga correcta
+head(datos)
+```
+
+## 2. Análisis exploratorio de datos
+
+```{r exploracion}
+# Estructura del dataset
+str(datos)
+
+# Dimensiones del dataset
+dim(datos)
+
+# Nombres de las columnas
+colnames(datos)
+
+# Resumen estadístico general
+summary(datos)
+```
+
+```{r estadisticas_detalladas}
+# Resumen más detallado para variables numéricas
+datos_numericos <- datos %>% select_if(is.numeric)
+estadisticas <- data.frame(
+  Media = sapply(datos_numericos, mean, na.rm = TRUE),
+  Mediana = sapply(datos_numericos, median, na.rm = TRUE),
+  Desv_Est = sapply(datos_numericos, sd, na.rm = TRUE),
+  Min = sapply(datos_numericos, min, na.rm = TRUE),
+  Max = sapply(datos_numericos, max, na.rm = TRUE),
+  Q1 = sapply(datos_numericos, function(x) quantile(x, 0.25, na.rm = TRUE)),
+  Q3 = sapply(datos_numericos, function(x) quantile(x, 0.75, na.rm = TRUE))
+)
+
+kable(estadisticas, caption = "Estadísticas descriptivas de variables numéricas")
+```
+
+## 3. Preprocesamiento de datos
+
+```{r traduccion_nombres}
+# Traducción de nombres de columnas a español
+nombres_espanol <- c(
+  "edad", "sexo", "tipo_dolor_pecho", "presion_reposo", "colesterol", 
+  "azucar_ayunas", "ecg_reposo", "max_ritmo_cardiaco", 
+  "angina_ejercicio", "depresion_st", "pendiente_st", 
+  "num_vasos_fluoroscopia", "thal", "enfermedad_cardiaca"
+)
+
+# Verificación de que el número de nombres coincide con las columnas
+if(length(nombres_espanol) == ncol(datos)) {
+  colnames(datos) <- nombres_espanol
+} else {
+  print("Error: El número de nombres en español no coincide con el número de columnas")
+}
+
+# Verificar cambio
+head(datos)
+```
+
+```{r verificacion_variabilidad}
+# Verificar variabilidad de las columnas numéricas
+var_cols <- sapply(datos %>% select_if(is.numeric), var, na.rm = TRUE)
+print(var_cols)
+
+# Mantener todas las columnas por ahora
+datos_clean <- datos
+```
+
+```{r verificar_duplicados}
+# Verificar duplicados
+duplicados <- sum(duplicated(datos_clean))
+cat("Número de filas duplicadas:", duplicados, "\n")
+
+# Eliminar duplicados si existen
+if(duplicados > 0) {
+  datos_clean <- distinct(datos_clean)
+  cat("Filas después de eliminar duplicados:", nrow(datos_clean), "\n")
+} else {
+  cat("No se encontraron filas duplicadas.\n")
+}
+```
+
+```{r conversion_factores}
+# Convertir variables categóricas a factor
+datos_clean <- datos_clean %>%
+  mutate(
+    sexo = as.factor(sexo),
+    tipo_dolor_pecho = as.factor(tipo_dolor_pecho),
+    azucar_ayunas = as.factor(azucar_ayunas),
+    ecg_reposo = as.factor(ecg_reposo),
+    angina_ejercicio = as.factor(angina_ejercicio),
+    pendiente_st = as.factor(pendiente_st),
+    num_vasos_fluoroscopia = as.factor(num_vasos_fluoroscopia),
+    thal = as.factor(thal),
+    enfermedad_cardiaca = as.factor(enfermedad_cardiaca)
+  )
+
+# Verificar cambios
+str(datos_clean)
+```
+
+```{r valores_nulos}
+# Conteo de valores nulos por columna
+valores_nulos <- colSums(is.na(datos_clean))
+kable(data.frame(
+  Variable = names(valores_nulos),
+  Cantidad_Nulos = valores_nulos
+))
+
+# Visualización de patrones de valores nulos
+vis_miss(datos_clean)
+```
+
+## 4. Análisis de valores atípicos (outliers)
+
+```{r outliers_boxplots, fig.height=10, fig.width=10}
+# Seleccionar variables numéricas para análisis de outliers
+datos_num <- datos_clean %>% select_if(is.numeric)
+
+# Crear boxplots para cada variable numérica
+par(mfrow=c(2, ceiling(ncol(datos_num)/2)))
+for(col in names(datos_num)) {
+  boxplot(datos_clean[[col]], main=col, col="lightblue", ylab=col)
+}
+```
+
+```{r calculo_limites_outliers}
+# Calcular límites para outliers y contarlos
+limites_atipicos <- data.frame(
+  Variable = character(),
+  Limite_Inferior = numeric(),
+  Limite_Superior = numeric(),
+  Cantidad_Atipicos = numeric()
+)
+
+for(col in names(datos_num)) {
+  Q1 <- quantile(datos_clean[[col]], 0.25, na.rm = TRUE)
+  Q3 <- quantile(datos_clean[[col]], 0.75, na.rm = TRUE)
+  IQR_val <- Q3 - Q1
+  
+  limite_inf <- Q1 - 1.5 * IQR_val
+  limite_sup <- Q3 + 1.5 * IQR_val
+  
+  # Contar atípicos
+  atipicos_inf <- sum(datos_clean[[col]] < limite_inf, na.rm = TRUE)
+  atipicos_sup <- sum(datos_clean[[col]] > limite_sup, na.rm = TRUE)
+  
+  limites_atipicos <- rbind(limites_atipicos, 
+                          data.frame(Variable = col,
+                                    Limite_Inferior = limite_inf,
+                                    Limite_Superior = limite_sup,
+                                    Cantidad_Atipicos = atipicos_inf + atipicos_sup))
+}
+
+kable(limites_atipicos)
+```
+
+```{r histogramas, fig.height=8, fig.width=10}
+# Histogramas para variables numéricas
+for(col in names(datos_num)) {
+  print(
+    ggplot(datos_clean, aes_string(x = col)) +
+      geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+      theme_minimal() +
+      labs(title = paste("Distribución de", col))
+  )
+}
+```
+
+```{r scatter_plots, fig.height=6, fig.width=10}
+# Gráficas de dispersión entre variables importantes
+# Edad vs. ritmo cardíaco máximo
+ggplot(datos_clean, aes(x = edad, y = max_ritmo_cardiaco, color = enfermedad_cardiaca)) +
+  geom_point(alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Edad vs. Ritmo Cardíaco Máximo",
+       x = "Edad", y = "Ritmo Cardíaco Máximo")
+
+# Colesterol vs. presión arterial
+ggplot(datos_clean, aes(x = colesterol, y = presion_reposo, color = enfermedad_cardiaca)) +
+  geom_point(alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Colesterol vs. Presión Arterial en Reposo",
+       x = "Colesterol", y = "Presión Arterial")
+```
+
+## 5. Tratamiento de valores atípicos y nulos
+
+```{r funciones_tratamiento}
+# Función para imputar valores nulos
+imputar_datos <- function(x) {
+  if(is.numeric(x)) {
+    if(any(is.na(x))) {
+      x[is.na(x)] <- median(x, na.rm = TRUE)
+    }
+  } else if(is.factor(x)) {
+    if(any(is.na(x))) {
+      # Para factores, imputar con la moda
+      moda <- names(sort(table(x), decreasing = TRUE))[1]
+      x[is.na(x)] <- moda
+    }
+  }
+  return(x)
+}
+
+# Función para tratar valores atípicos
+tratar_atipicos <- function(x) {
+  if(is.numeric(x)) {
+    Q1 <- quantile(x, 0.25, na.rm = TRUE)
+    Q3 <- quantile(x, 0.75, na.rm = TRUE)
+    IQR_val <- Q3 - Q1
+    
+    limite_inf <- Q1 - 1.5 * IQR_val
+    limite_sup <- Q3 + 1.5 * IQR_val
+    
+    # Reemplazar por límites
+    x[x < limite_inf] <- limite_inf
+    x[x > limite_sup] <- limite_sup
+  }
+  return(x)
+}
+
+# Aplicar correcciones
+datos_procesados <- datos_clean %>%
+  mutate(across(everything(), imputar_datos)) %>%
+  mutate(across(where(is.numeric), tratar_atipicos))
+
+# Verificar que no hay valores nulos
+cat("Valores nulos después de imputación:", sum(is.na(datos_procesados)), "\n")
+```
+
+```{r verificacion_outliers, fig.height=10, fig.width=10}
+# Verificar tratamiento de outliers con boxplots
+par(mfrow=c(2, ceiling(ncol(datos_num)/2)))
+for(col in names(datos_num)) {
+  boxplot(datos_procesados[[col]], main=paste("Después -", col), col="lightgreen")
+}
+```
+
+## 6. Análisis de variables categóricas
+
+```{r categoricas, fig.height=10, fig.width=12}
+# Función para graficar variables categóricas
+visualizar_categorica <- function(data, variable) {
+  ggplot(data, aes_string(x = variable, fill = "enfermedad_cardiaca")) +
+    geom_bar(position = "dodge") +
+    theme_minimal() +
+    labs(title = paste("Distribución de", variable, "por diagnóstico"),
+         x = variable,
+         y = "Frecuencia",
+         fill = "Enfermedad Cardíaca") +
+    scale_fill_manual(values = c("0" = "#4DAF4A", "1" = "#E41A1C"),
+                     labels = c("0" = "No", "1" = "Sí")) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+# Identificar variables categóricas
+vars_cat <- names(datos_procesados %>% select_if(is.factor))
+vars_cat <- vars_cat[vars_cat != "enfermedad_cardiaca"] # Excluir la variable objetivo
+
+# Aplicar la función a cada variable categórica
+for(var in vars_cat) {
+  print(visualizar_categorica(datos_procesados, var))
+}
+```
+
+## 7. Análisis de correlación
+
+```{r correlacion, fig.height=8, fig.width=10}
+# Matriz de correlación
+datos_num_procesados <- datos_procesados %>% 
+  select_if(is.numeric) %>%
+  # Añadir enfermedad_cardiaca como numérica para correlación
+  mutate(enfermedad_cardiaca = as.numeric(as.character(datos_procesados$enfermedad_cardiaca)))
+
+matriz_correlacion <- cor(datos_num_procesados, use = "complete.obs")
+
+# Visualización de la matriz de correlación
+corrplot(matriz_correlacion, method = "circle", type = "upper", 
+         tl.col = "black", tl.srt = 45, 
+         addCoef.col = "black", number.cex = 0.7)
+```
+
+## 8. Normalización y escalado de variables
+
+```{r rangos}
+# Verificar rangos de las variables
+rangos <- sapply(datos_num_procesados, function(x) max(x) - min(x))
+print(rangos)
+
+# Normalización Min-Max
+normalizar <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+
+# Escalado Z-score
+escalar <- function(x) {
+  return ((x - mean(x)) / sd(x))
+}
+
+# Aplicar normalización
+datos_normalizados <- datos_num_procesados %>%
+  mutate(across(everything(), normalizar))
+
+# Aplicar escalado
+datos_escalados <- datos_num_procesados %>%
+  mutate(across(everything(), escalar))
+```
+
+```{r distribucion_comparativa, fig.height=9, fig.width=10}
+# Comparar distribuciones antes y después para una variable (por ejemplo: edad)
+par(mfrow=c(3,1))
+hist(datos_num_procesados$edad, main="Edad - Original", col="lightblue", 
+     xlim=c(min(datos_num_procesados$edad), max(datos_num_procesados$edad)))
+hist(datos_normalizados$edad, main="Edad - Normalizada", col="lightgreen", xlim=c(0,1))
+hist(datos_escalados$edad, main="Edad - Escalada", col="lightpink", xlim=c(-3,3))
+```
+
+```{r correlacion_normalizada, fig.height=8, fig.width=10}
+# Correlación después de normalización
+# Configurar gráfico
+par(mar=c(2,2,3,2))  # Ajustar márgenes para el título
+
+# Crear matriz de correlación normalizada
+matriz_corr_norm <- cor(datos_normalizados)
+
+# Visualizar matriz con parámetros ajustados
+corrplot(matriz_corr_norm, 
+         method = "circle",
+         tl.cex = 0.7,        # Tamaño del texto de etiquetas
+         tl.col = "black",    # Color del texto
+         cl.ratio = 0.2)      # Proporción de la leyenda
+
+# Añadir título
+title("Correlación después de normalización", line = 1)
+```
