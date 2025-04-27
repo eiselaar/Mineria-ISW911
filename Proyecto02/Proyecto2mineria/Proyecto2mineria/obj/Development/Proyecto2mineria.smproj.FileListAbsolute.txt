@@ -1,0 +1,6 @@
+D:\USUARIO\MINERIA_KARENJ\Mineria_ISW911\PROYECTO2\Proyecto2mineria\Proyecto2mineria\bin\Model.asdatabase
+D:\USUARIO\MINERIA_KARENJ\Mineria_ISW911\PROYECTO2\Proyecto2mineria\Proyecto2mineria\bin\Model.deploymenttargets
+D:\USUARIO\MINERIA_KARENJ\Mineria_ISW911\PROYECTO2\Proyecto2mineria\Proyecto2mineria\bin\Model.deploymentoptions
+D:\USUARIO\MINERIA_KARENJ\Mineria_ISW911\PROYECTO2\Proyecto2mineria\Proyecto2mineria\obj\Development\Model.asdatabase
+D:\USUARIO\MINERIA_KARENJ\Mineria_ISW911\PROYECTO2\Proyecto2mineria\Proyecto2mineria\obj\Development\Model.deploymentoptions
+D:\USUARIO\MINERIA_KARENJ\Mineria_ISW911\PROYECTO2\Proyecto2mineria\Proyecto2mineria\obj\Development\Model.deploymenttargets

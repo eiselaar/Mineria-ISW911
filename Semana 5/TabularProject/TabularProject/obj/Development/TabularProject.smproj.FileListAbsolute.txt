@@ -1,0 +1,6 @@
+D:\USUARIO\MINERIA_KARENJ\TabularProject\TabularProject\bin\Model.asdatabase
+D:\USUARIO\MINERIA_KARENJ\TabularProject\TabularProject\bin\Model.deploymenttargets
+D:\USUARIO\MINERIA_KARENJ\TabularProject\TabularProject\bin\Model.deploymentoptions
+D:\USUARIO\MINERIA_KARENJ\TabularProject\TabularProject\obj\Development\Model.asdatabase
+D:\USUARIO\MINERIA_KARENJ\TabularProject\TabularProject\obj\Development\Model.deploymentoptions
+D:\USUARIO\MINERIA_KARENJ\TabularProject\TabularProject\obj\Development\Model.deploymenttargets

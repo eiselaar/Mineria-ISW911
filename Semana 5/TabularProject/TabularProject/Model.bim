@@ -1,0 +1,524 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "es-MX",
+    "dataSources": [
+      {
+        "name": "SqlServer DESKTOP-692NO3N AdventureWorksDW2017",
+        "connectionString": "Provider=SQLNCLI11;Data Source=DESKTOP-692NO3N;Initial Catalog=AdventureWorksDW2017;User ID=sa;Persist Security Info=false",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "DimAccount",
+        "columns": [
+          {
+            "name": "AccountKey",
+            "dataType": "int64",
+            "sourceColumn": "AccountKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ParentAccountKey",
+            "dataType": "int64",
+            "sourceColumn": "ParentAccountKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "AccountCodeAlternateKey",
+            "dataType": "int64",
+            "sourceColumn": "AccountCodeAlternateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ParentAccountCodeAlternateKey",
+            "dataType": "int64",
+            "sourceColumn": "ParentAccountCodeAlternateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "AccountDescription",
+            "dataType": "string",
+            "sourceColumn": "AccountDescription",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "AccountType",
+            "dataType": "string",
+            "sourceColumn": "AccountType",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Operator",
+            "dataType": "string",
+            "sourceColumn": "Operator",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CustomMembers",
+            "dataType": "string",
+            "sourceColumn": "CustomMembers",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ValueType",
+            "dataType": "string",
+            "sourceColumn": "ValueType",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CustomMemberOptions",
+            "dataType": "string",
+            "sourceColumn": "CustomMemberOptions",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimAccount",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DimAccount].*   FROM [dbo].[DimAccount] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N AdventureWorksDW2017"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DimAccount].*   FROM [dbo].[DimAccount] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimAccount"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DimDate",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FullDateAlternateKey",
+            "dataType": "dateTime",
+            "sourceColumn": "FullDateAlternateKey",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "DayNumberOfWeek",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfWeek",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "EnglishDayNameOfWeek",
+            "dataType": "string",
+            "sourceColumn": "EnglishDayNameOfWeek",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "SpanishDayNameOfWeek",
+            "dataType": "string",
+            "sourceColumn": "SpanishDayNameOfWeek",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "FrenchDayNameOfWeek",
+            "dataType": "string",
+            "sourceColumn": "FrenchDayNameOfWeek",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "DayNumberOfMonth",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfMonth",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "DayNumberOfYear",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfYear",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "WeekNumberOfYear",
+            "dataType": "int64",
+            "sourceColumn": "WeekNumberOfYear",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "EnglishMonthName",
+            "dataType": "string",
+            "sourceColumn": "EnglishMonthName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "SpanishMonthName",
+            "dataType": "string",
+            "sourceColumn": "SpanishMonthName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "FrenchMonthName",
+            "dataType": "string",
+            "sourceColumn": "FrenchMonthName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "MonthNumberOfYear",
+            "dataType": "int64",
+            "sourceColumn": "MonthNumberOfYear",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "CalendarQuarter",
+            "dataType": "int64",
+            "sourceColumn": "CalendarQuarter",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "CalendarYear",
+            "dataType": "int64",
+            "sourceColumn": "CalendarYear",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "CalendarSemester",
+            "dataType": "int64",
+            "sourceColumn": "CalendarSemester",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "FiscalQuarter",
+            "dataType": "int64",
+            "sourceColumn": "FiscalQuarter",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "FiscalYear",
+            "dataType": "int64",
+            "sourceColumn": "FiscalYear",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "FiscalSemester",
+            "dataType": "int64",
+            "sourceColumn": "FiscalSemester",
+            "sourceProviderType": "UnsignedTinyInt"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimDate",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DimDate].*   FROM [dbo].[DimDate] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N AdventureWorksDW2017"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DimDate].*   FROM [dbo].[DimDate] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimDate"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DimDepartmentGroup",
+        "columns": [
+          {
+            "name": "DepartmentGroupKey",
+            "dataType": "int64",
+            "sourceColumn": "DepartmentGroupKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ParentDepartmentGroupKey",
+            "dataType": "int64",
+            "sourceColumn": "ParentDepartmentGroupKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "DepartmentGroupName",
+            "dataType": "string",
+            "sourceColumn": "DepartmentGroupName",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimDepartmentGroup",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DimDepartmentGroup].*   FROM [dbo].[DimDepartmentGroup] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N AdventureWorksDW2017"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DimDepartmentGroup].*   FROM [dbo].[DimDepartmentGroup] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimDepartmentGroup"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DimOrganization",
+        "columns": [
+          {
+            "name": "OrganizationKey",
+            "dataType": "int64",
+            "sourceColumn": "OrganizationKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ParentOrganizationKey",
+            "dataType": "int64",
+            "sourceColumn": "ParentOrganizationKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "PercentageOfOwnership",
+            "dataType": "string",
+            "sourceColumn": "PercentageOfOwnership",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "OrganizationName",
+            "dataType": "string",
+            "sourceColumn": "OrganizationName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CurrencyKey",
+            "dataType": "int64",
+            "sourceColumn": "CurrencyKey",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimOrganization",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DimOrganization].*   FROM [dbo].[DimOrganization] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N AdventureWorksDW2017"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DimOrganization].*   FROM [dbo].[DimOrganization] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimOrganization"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DimScenario",
+        "columns": [
+          {
+            "name": "ScenarioKey",
+            "dataType": "int64",
+            "sourceColumn": "ScenarioKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ScenarioName",
+            "dataType": "string",
+            "sourceColumn": "ScenarioName",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimScenario",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DimScenario].*   FROM [dbo].[DimScenario] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N AdventureWorksDW2017"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DimScenario].*   FROM [dbo].[DimScenario] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimScenario"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "FactFinance",
+        "columns": [
+          {
+            "name": "FinanceKey",
+            "dataType": "int64",
+            "sourceColumn": "FinanceKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "OrganizationKey",
+            "dataType": "int64",
+            "sourceColumn": "OrganizationKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "DepartmentGroupKey",
+            "dataType": "int64",
+            "sourceColumn": "DepartmentGroupKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ScenarioKey",
+            "dataType": "int64",
+            "sourceColumn": "ScenarioKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "AccountKey",
+            "dataType": "int64",
+            "sourceColumn": "AccountKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Amount",
+            "dataType": "double",
+            "sourceColumn": "Amount",
+            "sourceProviderType": "Double"
+          },
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Date",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "FactFinance",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[FactFinance].*   FROM [dbo].[FactFinance] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N AdventureWorksDW2017"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[FactFinance].*   FROM [dbo].[FactFinance] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "FactFinance"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "47f0c6a2-5d5c-4289-aa24-5d28c58712c6",
+        "fromTable": "FactFinance",
+        "fromColumn": "AccountKey",
+        "toTable": "DimAccount",
+        "toColumn": "AccountKey"
+      },
+      {
+        "name": "68388bfb-0f75-4444-b581-c181c55f6cf5",
+        "fromTable": "FactFinance",
+        "fromColumn": "DateKey",
+        "toTable": "DimDate",
+        "toColumn": "DateKey"
+      },
+      {
+        "name": "dba05597-904c-4e48-8c2d-e288ad5c17e6",
+        "fromTable": "FactFinance",
+        "fromColumn": "DepartmentGroupKey",
+        "toTable": "DimDepartmentGroup",
+        "toColumn": "DepartmentGroupKey"
+      },
+      {
+        "name": "303d6456-f5b7-4c07-896f-08e993adec83",
+        "fromTable": "FactFinance",
+        "fromColumn": "OrganizationKey",
+        "toTable": "DimOrganization",
+        "toColumn": "OrganizationKey"
+      },
+      {
+        "name": "58162b60-a5bf-4471-ab47-3066e3f5fb90",
+        "fromTable": "FactFinance",
+        "fromColumn": "ScenarioKey",
+        "toTable": "DimScenario",
+        "toColumn": "ScenarioKey"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}

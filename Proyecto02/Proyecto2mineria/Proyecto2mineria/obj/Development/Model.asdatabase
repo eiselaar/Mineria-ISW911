@@ -1,0 +1,457 @@
+{
+  "name": "Proyecto2mineria",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "es-MX",
+    "dataSources": [
+      {
+        "name": "SqlServer DESKTOP-692NO3N DW",
+        "connectionString": "Provider=SQLNCLI11;Data Source=DESKTOP-692NO3N;Initial Catalog=DW;User ID=sa;Persist Security Info=false",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "DIM_CLIENTE",
+        "columns": [
+          {
+            "name": "id_cliente",
+            "dataType": "int64",
+            "sourceColumn": "id_cliente",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "codigo_cliente",
+            "dataType": "string",
+            "sourceColumn": "codigo_cliente",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "nombre_cliente",
+            "dataType": "string",
+            "sourceColumn": "nombre_cliente",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "asesor_ventas",
+            "dataType": "string",
+            "sourceColumn": "asesor_ventas",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ciudad",
+            "dataType": "string",
+            "sourceColumn": "ciudad",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "region",
+            "dataType": "string",
+            "sourceColumn": "region",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "pais",
+            "dataType": "string",
+            "sourceColumn": "pais",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "categoria",
+            "dataType": "string",
+            "sourceColumn": "categoria",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DIM_CLIENTE",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DIM_CLIENTE].*   FROM [dbo].[DIM_CLIENTE] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DIM_CLIENTE].*   FROM [dbo].[DIM_CLIENTE] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DIM_CLIENTE"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DIM_EMPLEADO",
+        "columns": [
+          {
+            "name": "ID_DIM_EMPLEADO",
+            "dataType": "int64",
+            "sourceColumn": "ID_DIM_EMPLEADO",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CODIGO_EMPLEADO",
+            "dataType": "string",
+            "sourceColumn": "CODIGO_EMPLEADO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "NOMBRE_EMPLEADO",
+            "dataType": "string",
+            "sourceColumn": "NOMBRE_EMPLEADO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "PUESTO_EMPLEADO",
+            "dataType": "string",
+            "sourceColumn": "PUESTO_EMPLEADO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "TELEFONO",
+            "dataType": "string",
+            "sourceColumn": "TELEFONO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "EXTENSION",
+            "dataType": "string",
+            "sourceColumn": "EXTENSION",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "REGION",
+            "dataType": "string",
+            "sourceColumn": "REGION",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CIUDAD",
+            "dataType": "string",
+            "sourceColumn": "CIUDAD",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "PAIS",
+            "dataType": "string",
+            "sourceColumn": "PAIS",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CODIGO_POSTAL",
+            "dataType": "string",
+            "sourceColumn": "CODIGO_POSTAL",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "DIRECCION",
+            "dataType": "string",
+            "sourceColumn": "DIRECCION",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "EMPRESA",
+            "dataType": "string",
+            "sourceColumn": "EMPRESA",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DIM_EMPLEADO",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DIM_EMPLEADO].*   FROM [dbo].[DIM_EMPLEADO] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DIM_EMPLEADO].*   FROM [dbo].[DIM_EMPLEADO] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DIM_EMPLEADO"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DIM_PRODUCTO",
+        "columns": [
+          {
+            "name": "ID_DIM_PRODUCTO",
+            "dataType": "int64",
+            "sourceColumn": "ID_DIM_PRODUCTO",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CODIGO_PRODUCTO",
+            "dataType": "string",
+            "sourceColumn": "CODIGO_PRODUCTO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "NOMBRE_PRODUCTO",
+            "dataType": "string",
+            "sourceColumn": "NOMBRE_PRODUCTO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CATEGORIA_PRODUCTO",
+            "dataType": "string",
+            "sourceColumn": "CATEGORIA_PRODUCTO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "DESCRIPCION_CATEGORIA",
+            "dataType": "string",
+            "sourceColumn": "DESCRIPCION_CATEGORIA",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "PRECIO_VENTA",
+            "dataType": "double",
+            "sourceColumn": "PRECIO_VENTA",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "CANTIDAD_EN_STOCK",
+            "dataType": "int64",
+            "sourceColumn": "CANTIDAD_EN_STOCK",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "PROVEEDOR",
+            "dataType": "string",
+            "sourceColumn": "PROVEEDOR",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DIM_PRODUCTO",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DIM_PRODUCTO].*   FROM [dbo].[DIM_PRODUCTO] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DIM_PRODUCTO].*   FROM [dbo].[DIM_PRODUCTO] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DIM_PRODUCTO"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DIM_TIEMPO",
+        "columns": [
+          {
+            "name": "ID_TIEMPO",
+            "dataType": "int64",
+            "sourceColumn": "ID_TIEMPO",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FECHA",
+            "dataType": "dateTime",
+            "sourceColumn": "FECHA",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "ANIO",
+            "dataType": "int64",
+            "sourceColumn": "ANIO",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "MES",
+            "dataType": "int64",
+            "sourceColumn": "MES",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "DIA",
+            "dataType": "int64",
+            "sourceColumn": "DIA",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "NMES",
+            "dataType": "string",
+            "sourceColumn": "NMES",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "DIA_ANNIO",
+            "dataType": "int64",
+            "sourceColumn": "DIA_ANNIO",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DIM_TIEMPO",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[DIM_TIEMPO].*   FROM [dbo].[DIM_TIEMPO] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DIM_TIEMPO].*   FROM [dbo].[DIM_TIEMPO] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DIM_TIEMPO"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "FACT_VENTAS",
+        "columns": [
+          {
+            "name": "ID_FACT_VENTA",
+            "dataType": "int64",
+            "sourceColumn": "ID_FACT_VENTA",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ID_CLIENTE",
+            "dataType": "string",
+            "sourceColumn": "ID_CLIENTE",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ID_PRODUCTO",
+            "dataType": "string",
+            "sourceColumn": "ID_PRODUCTO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ID_EMPLEADO",
+            "dataType": "int64",
+            "sourceColumn": "ID_EMPLEADO",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FECHA",
+            "dataType": "dateTime",
+            "sourceColumn": "FECHA",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "CANTIDAD",
+            "dataType": "int64",
+            "sourceColumn": "CANTIDAD",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "PRECIO",
+            "dataType": "double",
+            "sourceColumn": "PRECIO",
+            "sourceProviderType": "Numeric"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "FACT_VENTAS",
+            "dataView": "full",
+            "source": {
+              "query": " \t\t\t\tSELECT [dbo].[FACT_VENTAS].*   FROM [dbo].[FACT_VENTAS] ",
+              "dataSource": "SqlServer DESKTOP-692NO3N DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[FACT_VENTAS].*   FROM [dbo].[FACT_VENTAS] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "FACT_VENTAS"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "5bb86c21-4af1-4ff9-a920-594cc271a00c",
+        "fromTable": "FACT_VENTAS",
+        "fromColumn": "ID_CLIENTE",
+        "toTable": "DIM_CLIENTE",
+        "toColumn": "codigo_cliente"
+      },
+      {
+        "name": "b749e943-4e48-4bca-8f0b-83b2a4721352",
+        "fromTable": "FACT_VENTAS",
+        "fromColumn": "ID_EMPLEADO",
+        "toTable": "DIM_EMPLEADO",
+        "toColumn": "ID_DIM_EMPLEADO"
+      },
+      {
+        "name": "2b67c5d9-3a9d-4072-8d16-86f6a017981e",
+        "fromTable": "FACT_VENTAS",
+        "fromColumn": "ID_PRODUCTO",
+        "toTable": "DIM_PRODUCTO",
+        "toColumn": "CODIGO_PRODUCTO"
+      },
+      {
+        "name": "cd3bbb66-e5b0-44b9-a8cd-251ed3fd3e7c",
+        "fromTable": "FACT_VENTAS",
+        "fromColumn": "FECHA",
+        "toTable": "DIM_TIEMPO",
+        "toColumn": "FECHA"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  }
+}
